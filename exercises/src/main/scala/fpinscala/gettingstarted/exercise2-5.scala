@@ -20,6 +20,9 @@ object MyCompose {
   def compose[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D =
     (a: A) => f(g(h(a)))
 
+  def compose_answer[A,B,C](f: B => C, g: A => B): A => C =
+    a => f(g(a))
+
   def main(args: Array[String]): Unit = {
     val double = (x: Int) => x * 2
     val triple = (x: Int) => x * 3

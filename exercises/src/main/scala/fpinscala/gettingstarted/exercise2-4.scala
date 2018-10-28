@@ -10,11 +10,6 @@ package fpinscala.gettingstarted
 // Exercise 4: Implement `uncurry`
 object MyUncurry {
 
-  // Input: a function that takes an A and returns a function that takes a B and returns a C
-  // Output: a function that takes 2 parameters and returns a
-  def uncurry[A,B,C](f: A => B => C): (A, B) => C =
-    (a: A, b: B) => f(a)(b)
-
   /*
    NB: There is a method on the `Function` object in the standard library,
    `Function.uncurried` that you can use for uncurrying.
@@ -24,6 +19,14 @@ object MyUncurry {
    we say that they are _isomorphic_ ("iso" = same; "morphe" = shape, form),
    a term we inherit from category theory.
    */
+
+  // Input: a function that takes an A and returns a function that takes a B and returns a C
+  // Output: a function that takes 2 parameters and returns a
+  def uncurry[A,B,C](f: A => B => C): (A, B) => C =
+    (a: A, b: B) => f(a)(b)
+
+  def uncurry_answer[A,B,C](f: A => B => C): (A, B) => C =
+    (a, b) => f(a)(b)
 
   def curriedSum(x: Int)(y: Int): Int = x + y
 

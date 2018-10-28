@@ -30,6 +30,11 @@ object MyCurry {
   def curry[A,B,C](f: (A, B) => C): A => (B => C) =
     (a: A) => partial1(a, f) // partial1 returns a function that takes a B and returns a C
 
+  /* NB: The `Function2` trait has a `curried` method already, so if you wanted to
+     cheat a little you could write the answer as f.curried */
+  def curry_answer[A,B,C](f: (A, B) => C): A => (B => C) =
+    a => b => f(a, b)
+
   def sum(x: Int, y: Int): Int = x + y
   def curriedSum(x: Int)(y: Int): Int = x + y
 

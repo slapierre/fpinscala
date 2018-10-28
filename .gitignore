@@ -3,6 +3,8 @@
 *.un~
 .cache-main
 .classpath
+.ensime
+.ensime_cache/
 .history
 .idea
 .metadata/

@@ -14,44 +14,37 @@ object MySort {
     @tailrec
     def go(lhs: A, rhs: List[A]): Boolean = {
       rhs match {
-        case List(last) =>
-          println ("go, list of 1 element: compare!")
-          compare(lhs, last) // compare with last element
-        case _ =>
-          println ("go, list of many element: compare!")
-          val elem = rhs.head
-          if (!compare(lhs, elem))
+        case List(last) => compare(lhs, last) // Compare last element
+        case h :: t => // Pattern matching on lists: section 16.5 of Programming in Scala
+          if (!compare(lhs, h))
             false
           else
-            go(elem, rhs.tail)
+            go(h, t)
       }
     }
 
     xs match {
-      case Nil =>
-        println ("empty list, sorted!")
-        true
-      case List(_) =>
-        println ("list of 1 element, sorted!")
-        true
-      case _ =>
-        println ("non-empty list, call go!")
-        go(xs.head, xs.tail)
+      case Nil => true
+      case List(_) => true
+      case _ => go(xs.head, xs.tail)
     }
   }
 
-  def compareInt(lhs: Int, rhs: Int): Boolean = {
-    println(s"compareInt, lhs: $lhs, rhs: $rhs, comparison: ${lhs <= rhs}")
-    lhs <= rhs
-  }
+  def compareInt(lhs: Int, rhs: Int): Boolean = lhs <= rhs
+  def compareStr(lhs: String, rhs: String): Boolean = lhs.length <= rhs.length
 
-  // Call from REPL: MySort.main(Array())
   def main(args: Array[String]): Unit = {
     println(s"* Empty List: ${isSorted(List(), compareInt)}")
-    println(s"* List with 1 element: ${isSorted(List(1), compareInt)}")
-    println(s"* List with 2 elements (sorted: ${isSorted(List(1, 2), compareInt)}")
-    println(s"* List with 2 elements (unsorted): ${isSorted(List(2, 1), compareInt)}")
-    println(s"* List with 5 elements (sorted): ${isSorted(List(1, 2, 3, 4, 5), compareInt)}")
-    println(s"* List with 5 elements (unsorted): ${isSorted(List(1, 2, 4, 3, 5), compareInt)}")
+    println(s"* List of 1 element: ${isSorted(List(1), compareInt)}")
+
+    println
+    println(s"* List of 2 integers (sorted): ${isSorted(List(1, 2), compareInt)}")
+    println(s"* List of 2 integers (unsorted): ${isSorted(List(2, 1), compareInt)}")
+    println(s"* List of 5 integers (sorted): ${isSorted(List(1, 2, 3, 4, 5), compareInt)}")
+    println(s"* List of 5 integers (unsorted): ${isSorted(List(1, 2, 4, 3, 5), compareInt)}")
+
+    println
+    println(s"* List of 3 strings (sorted): ${isSorted(List("foo", "bar", "foobar"), compareStr)}")
+    println(s"* List of 3 strings (unsorted): ${isSorted(List("foo", "foobar", "bar"), compareStr)}")
   }
 }
